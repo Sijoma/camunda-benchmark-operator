@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple
+  labels:
+    app: simple
+spec:
+  selector:
+    matchLabels:
+      app: simple
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: simple
+    spec:
+      containers:
+      - name: simple
+        image: gcr.io/zeebe-io/starter:SNAPSHOT
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_OPTIONS
+            value: >-
+              -Dapp.tls=true
+              -Dapp.starter.rate=300
+              -Dzeebe.client.requestTimeout=62000
+              -XX:+HeapDumpOnOutOfMemoryError
+              -Dapp.starter.bpmnXmlPath=bpmn/simpleProcess.bpmn
+              -Dapp.starter.processId=simpleProcess
+          - name: LOG_LEVEL
+            value: "warn"
+          - name: ZEEBE_ADDRESS
+            valueFrom:
+              secretKeyRef:
+                name: cloud-credentials
+                key: zeebeAddress
+          - name: ZEEBE_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: cloud-credentials
+                key: clientId
+          - name: ZEEBE_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: cloud-credentials
+                key: clientSecret
+          - name: ZEEBE_AUTHORIZATION_SERVER_URL
+            valueFrom:
+              secretKeyRef:
+                name: cloud-credentials
+                key: authServer
+        resources:
+          limits:
+            cpu: 250m
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi

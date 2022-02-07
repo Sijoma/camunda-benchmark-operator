@@ -1,0 +1,16 @@
+domain: camunda.io
+layout:
+- go.kubebuilder.io/v3
+projectName: camunda-benchmark-operator
+repo: github.com/sijoma/camunda-benchmark-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: camunda.io
+  group: cloud
+  kind: Benchmark
+  path: github.com/sijoma/camunda-benchmark-operator/api/v1alpha1
+  version: v1alpha1
+version: "3"
