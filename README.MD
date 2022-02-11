@@ -42,9 +42,9 @@ spec:
 
 ## Current Status
 
-Run if you want to get more insights on the current status of the benchmark:
+Run the following command if you want to get more insights on the current status of the benchmark:
 `kubectl describe benchmark benchmark-sample`
-```
+```shell
 Spec:
   Credentials Secret Name:  cloud-credentials
   Duration:                 2m
@@ -56,6 +56,12 @@ Status:
   Start Time:  2022-02-11T21:34:21Z
 
 Events:        <none>
+```
+
+You can also run `kubectl get bench benchmark-sample` and it will print this:
+```shell
+NAME                    # WORKERS   STARTER RATE   DURATION   AGE    PROGRESS
+benchmark-sample-gets   2           200            2m         106s   Running
 ```
 
 In the future this should also log the results of the benchmark. 
