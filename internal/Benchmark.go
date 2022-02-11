@@ -41,6 +41,6 @@ func createComponent(bm *cloudv1alpha.Benchmark, name string) client.Object {
 		return nil
 	}
 	comp.SetNamespace(bm.Namespace)
-	comp.SetName(bm.Spec.BenchmarkName + "-" + comp.GetName())
+	comp.SetName(bm.Name + "-" + comp.GetName())
 	return comp
 }

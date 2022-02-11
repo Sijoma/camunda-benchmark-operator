@@ -35,24 +35,27 @@ spec:
           spec:
             description: BenchmarkSpec defines the desired state of Benchmark
             properties:
-              benchmarkName:
+              processStarterRate:
                 description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                   Important: Run "make" to regenerate code after modifying this file'
-                type: string
-              processStarterRate:
                 type: integer
               starterReplicas:
                 type: integer
               workerCount:
                 type: integer
             required:
-            - benchmarkName
             - processStarterRate
             - starterReplicas
             - workerCount
             type: object
           status:
             description: BenchmarkStatus defines the observed state of Benchmark
+            properties:
+              startTime:
+                format: date-time
+                type: string
+            required:
+            - startTime
             type: object
         type: object
     served: true

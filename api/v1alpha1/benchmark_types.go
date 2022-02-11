@@ -27,16 +27,14 @@ import (
 type BenchmarkSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	BenchmarkName      string `json:"benchmarkName"`
-	ProcessStarterRate int    `json:"processStarterRate"`
-	StarterReplicas    int    `json:"starterReplicas"`
-	WorkerCount        int    `json:"workerCount"`
+	ProcessStarterRate int `json:"processStarterRate"`
+	StarterReplicas    int `json:"starterReplicas"`
+	WorkerCount        int `json:"workerCount"`
 }
 
 // BenchmarkStatus defines the observed state of Benchmark
 type BenchmarkStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	StartTime *metav1.Time `json:"startTime"`
 }
 
 //+kubebuilder:object:root=true

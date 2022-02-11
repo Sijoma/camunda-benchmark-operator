@@ -18,6 +18,8 @@ package controllers
 
 import (
 	"context"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"time"
 
 	"github.com/sijoma/camunda-benchmark-operator/internal"
 	apps "k8s.io/api/apps/v1"
@@ -78,6 +80,16 @@ func (r *BenchmarkReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		if err != nil {
 			return ctrl.Result{}, err
 		}
+	}
+
+	if benchmark.Status.StartTime == nil {
+		benchmark.Status.StartTime = &metav1.Time{Time: time.Now()}
+	}
+
+	err := r.Status().Update(ctx, benchmark)
+	if err != nil {
+		log.Error(err, "unable to update benchmark status")
+		return ctrl.Result{}, err
 	}
 
 	return ctrl.Result{}, nil

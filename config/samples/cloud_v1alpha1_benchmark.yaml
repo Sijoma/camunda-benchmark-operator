@@ -3,7 +3,6 @@ kind: Benchmark
 metadata:
   name: benchmark-sample
 spec:
-  benchmarkName: "load-test"
-  workerCount: 3
+  workerCount: 2
   processStarterRate: 200
-  starterReplicas: 2
+  starterReplicas: 3
