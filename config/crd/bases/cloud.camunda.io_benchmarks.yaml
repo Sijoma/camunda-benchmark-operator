@@ -12,10 +12,28 @@ spec:
     kind: Benchmark
     listKind: BenchmarkList
     plural: benchmarks
+    shortNames:
+    - bench
     singular: benchmark
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .spec.workerCount
+      name: '# Workers'
+      type: string
+    - jsonPath: .spec.processStarterRate
+      name: Starter Rate
+      type: string
+    - jsonPath: .spec.duration
+      name: Duration
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.progress
+      name: Progress
+      type: string
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: Benchmark is the Schema for the benchmarks API
@@ -39,6 +57,9 @@ spec:
                 description: This has to be the name of a secret that contains clientId,
                   clientSecret, zeebeAddress and authServer. It defaults to "cloud-credentials"
                 type: string
+              duration:
+                description: How long the benchmark should run
+                type: string
               processStarterRate:
                 description: Starter rate value on the starter deployment
                 type: integer
@@ -49,6 +70,7 @@ spec:
                 description: Number of workers
                 type: integer
             required:
+            - duration
             - processStarterRate
             - starterReplicas
             - workerCount
@@ -56,10 +78,13 @@ spec:
           status:
             description: BenchmarkStatus defines the observed state of Benchmark
             properties:
+              progress:
+                type: string
               startTime:
                 format: date-time
                 type: string
             required:
+            - progress
             - startTime
             type: object
         type: object

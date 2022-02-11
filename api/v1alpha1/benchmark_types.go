@@ -35,15 +35,24 @@ type BenchmarkSpec struct {
 	StarterReplicas int `json:"starterReplicas"`
 	// Number of workers
 	WorkerCount int `json:"workerCount"`
+	// How long the benchmark should run
+	Duration string `json:"duration"`
 }
 
 // BenchmarkStatus defines the observed state of Benchmark
 type BenchmarkStatus struct {
 	StartTime *metav1.Time `json:"startTime"`
+	Progress  string       `json:"progress"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:resource:scope=Namespaced,path=benchmarks,shortName=bench
+//+kubebuilder:printcolumn:name="# Workers",type=string,JSONPath=`.spec.workerCount`
+//+kubebuilder:printcolumn:name="Starter Rate",type=string,JSONPath=`.spec.processStarterRate`
+//+kubebuilder:printcolumn:name="Duration",type=string,JSONPath=`.spec.duration`
+//+kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+//+kubebuilder:printcolumn:name="Progress",type=string,JSONPath=`.status.progress`
 
 // Benchmark is the Schema for the benchmarks API
 type Benchmark struct {

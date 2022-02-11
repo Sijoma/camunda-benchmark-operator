@@ -7,3 +7,4 @@ spec:
   workerCount: 2
   processStarterRate: 200
   starterReplicas: 3
+  duration: 2m

@@ -67,6 +67,17 @@ func (r *BenchmarkReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	}
 
 	bench := internal.NewBenchmark(benchmark)
+	if benchmark.Status.Progress == "Done" {
+		for _, resource := range bench.Resources {
+			err := r.Delete(ctx, resource)
+			if err != nil {
+				log.Error(err, "unable to delete resource")
+				return ctrl.Result{}, err
+			}
+		}
+		return ctrl.Result{}, nil
+	}
+
 	for _, resource := range bench.Resources {
 		// Set owner reference.
 		err := controllerutil.SetControllerReference(benchmark, resource, r.Scheme)
@@ -86,13 +97,25 @@ func (r *BenchmarkReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		benchmark.Status.StartTime = &metav1.Time{Time: time.Now()}
 	}
 
+	result := ctrl.Result{
+		Requeue:      true,
+		RequeueAfter: 10,
+	}
+	currentTime := time.Now()
+	benchmarkDuration, _ := time.ParseDuration(benchmark.Spec.Duration)
+	if currentTime.After(benchmark.Status.StartTime.Time.Add(benchmarkDuration)) {
+		result.Requeue = false
+		benchmark.Status.Progress = "Done"
+	} else {
+		benchmark.Status.Progress = "Running"
+	}
 	err := r.Status().Update(ctx, benchmark)
 	if err != nil {
 		log.Error(err, "unable to update benchmark status")
-		return ctrl.Result{}, err
+		return result, err
 	}
 
-	return ctrl.Result{}, nil
+	return result, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
