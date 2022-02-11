@@ -3,7 +3,7 @@
 An operator that helps you perform benchmarks.  
 
 ## Your first benchmark
-*This requires that you know how to run the operator, you might be able to figure that out from the <b>config<b> folder.*
+*This requires that you know how to run the operator, you might be able to figure that out from the <b>config</b> folder.*
 
 In order to benchmark you need to create a secret with the credentials for your zeebe cluster.
 
