@@ -25,11 +25,16 @@ import (
 
 // BenchmarkSpec defines the desired state of Benchmark
 type BenchmarkSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// This has to be the name of a secret that contains clientId, clientSecret,
+	// zeebeAddress and authServer. It defaults to "cloud-credentials"
+	//+optional
+	CredentialsSecretName string `json:"credentialsSecretName"`
+	// Starter rate value on the starter deployment
 	ProcessStarterRate int `json:"processStarterRate"`
-	StarterReplicas    int `json:"starterReplicas"`
-	WorkerCount        int `json:"workerCount"`
+	// Number of replicas for the starter
+	StarterReplicas int `json:"starterReplicas"`
+	// Number of workers
+	WorkerCount int `json:"workerCount"`
 }
 
 // BenchmarkStatus defines the observed state of Benchmark

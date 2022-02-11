@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: worker
-  replicas: {{ .workerReplicas }}
+  replicas: {{ or .workerReplicas 3}}
   template:
     metadata:
       labels:

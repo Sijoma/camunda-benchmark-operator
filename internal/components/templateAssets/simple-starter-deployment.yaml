@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: simple
-  replicas: {{ .starterReplicas }}
+  replicas: {{ or .starterReplicas 1 }}
   template:
     metadata:
       labels:
@@ -19,36 +19,36 @@ spec:
         image: gcr.io/zeebe-io/starter:SNAPSHOT
         imagePullPolicy: Always
         env:
-          - name: JAVA_OPTIONS
-            value: >-
-              -Dapp.tls=true
-              -Dapp.starter.rate={{ .simpleStarterRate }}
-              -Dzeebe.client.requestTimeout=62000
-              -XX:+HeapDumpOnOutOfMemoryError
-              -Dapp.starter.bpmnXmlPath=bpmn/simpleProcess.bpmn
-              -Dapp.starter.processId=simpleProcess
           - name: LOG_LEVEL
             value: "warn"
           - name: ZEEBE_ADDRESS
             valueFrom:
               secretKeyRef:
-                name: cloud-credentials
+                name: {{or .credentialsSecretName "cloud-credentials" }}
                 key: zeebeAddress
           - name: ZEEBE_CLIENT_ID
             valueFrom:
               secretKeyRef:
-                name: cloud-credentials
+                name: {{or .credentialsSecretName "cloud-credentials" }}
                 key: clientId
           - name: ZEEBE_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-                name: cloud-credentials
+                name: {{or .credentialsSecretName "cloud-credentials" }}
                 key: clientSecret
           - name: ZEEBE_AUTHORIZATION_SERVER_URL
             valueFrom:
               secretKeyRef:
-                name: cloud-credentials
+                name: {{or .credentialsSecretName "cloud-credentials" }}
                 key: authServer
+          - name: JAVA_OPTIONS
+            value: >-
+              -Dapp.tls=true
+              -Dapp.starter.rate={{ or .simpleStarterRate 300}}
+              -Dzeebe.client.requestTimeout=62000
+              -XX:+HeapDumpOnOutOfMemoryError
+              -Dapp.starter.bpmnXmlPath=bpmn/simpleProcess.bpmn
+              -Dapp.starter.processId=simpleProcess
         resources:
           limits:
             cpu: 250m

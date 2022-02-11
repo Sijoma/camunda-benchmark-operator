@@ -3,6 +3,7 @@ kind: Benchmark
 metadata:
   name: benchmark-sample
 spec:
+  credentialsSecretName: name-of-secret
   workerCount: 2
   processStarterRate: 200
   starterReplicas: 3

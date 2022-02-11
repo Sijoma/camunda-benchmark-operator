@@ -32,9 +32,10 @@ func NewBenchmark(benchmarkSpec *cloudv1alpha.Benchmark) *Benchmark {
 
 func createComponent(bm *cloudv1alpha.Benchmark, name string) client.Object {
 	benchmarkInfos := map[string]string{
-		"starterReplicas":   strconv.Itoa(bm.Spec.StarterReplicas),
-		"simpleStarterRate": strconv.Itoa(bm.Spec.ProcessStarterRate),
-		"workerReplicas":    strconv.Itoa(bm.Spec.WorkerCount),
+		"credentialsSecretName": bm.Spec.CredentialsSecretName,
+		"starterReplicas":       strconv.Itoa(bm.Spec.StarterReplicas),
+		"simpleStarterRate":     strconv.Itoa(bm.Spec.ProcessStarterRate),
+		"workerReplicas":        strconv.Itoa(bm.Spec.WorkerCount),
 	}
 	comp, err := components.Get(name, true, benchmarkInfos)
 	if err != nil {
