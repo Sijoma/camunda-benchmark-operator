@@ -55,7 +55,7 @@ Status:
   Progress:    Running
   Start Time:  2022-02-11T21:34:21Z
 
-Events:        <none>yaml
+Events:        <none>
 ```
 
 In the future this should also log the results of the benchmark. 
