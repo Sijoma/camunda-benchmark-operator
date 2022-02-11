@@ -28,7 +28,8 @@ type BenchmarkSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 	BenchmarkName      string `json:"benchmarkName"`
-	ClusterCredentials string `json:"clusterCredentials,omitempty"`
+	ProcessStarterRate int    `json:"processStarterRate"`
+	WorkerCount        int    `json:"workerCount"`
 }
 
 // BenchmarkStatus defines the observed state of Benchmark

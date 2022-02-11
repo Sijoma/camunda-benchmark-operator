@@ -22,7 +22,7 @@ spec:
           - name: JAVA_OPTIONS
             value: >-
               -Dapp.tls=true
-              -Dapp.starter.rate=300
+              -Dapp.starter.rate={{ .simpleStarterRate }}
               -Dzeebe.client.requestTimeout=62000
               -XX:+HeapDumpOnOutOfMemoryError
               -Dapp.starter.bpmnXmlPath=bpmn/simpleProcess.bpmn

@@ -39,10 +39,14 @@ spec:
                 description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                   Important: Run "make" to regenerate code after modifying this file'
                 type: string
-              clusterCredentials:
-                type: string
+              processStarterRate:
+                type: integer
+              workerCount:
+                type: integer
             required:
             - benchmarkName
+            - processStarterRate
+            - workerCount
             type: object
           status:
             description: BenchmarkStatus defines the observed state of Benchmark

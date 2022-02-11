@@ -4,3 +4,5 @@ metadata:
   name: benchmark-sample
 spec:
   benchmarkName: "load-test"
+  workerCount: 3
+  processStarterRate: 200
