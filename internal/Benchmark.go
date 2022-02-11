@@ -18,8 +18,8 @@ func NewBenchmark(benchmarkSpec *cloudv1alpha.Benchmark) *Benchmark {
 	// These objects currently constitute a "benchmark",
 	// we pass no further configuration to them
 	componentTemplates := []string{
-		"simple-starter-deployment.yaml", "simple-service.yaml",
-		"worker-deployment.yaml", "worker-service.yaml",
+		"simple-starter-deployment.yaml",
+		"worker-deployment.yaml",
 	}
 
 	for _, template := range componentTemplates {

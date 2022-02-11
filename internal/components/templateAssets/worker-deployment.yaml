@@ -19,10 +19,30 @@ spec:
           image: gcr.io/zeebe-io/worker:SNAPSHOT
           imagePullPolicy: Always
           env:
+            - name: ZEEBE_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  name: {{or .credentialsSecretName "cloud-credentials" }}
+                  key: zeebeAddress
+            - name: ZEEBE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{or .credentialsSecretName "cloud-credentials" }}
+                  key: clientId
+            - name: ZEEBE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{or .credentialsSecretName "cloud-credentials" }}
+                  key: clientSecret
+            - name: ZEEBE_AUTHORIZATION_SERVER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{or .credentialsSecretName "cloud-credentials" }}
+                  key: authServer
             - name: JAVA_OPTIONS
               value: >-
-                -Dapp.brokerUrl=zeebe-service:26500
                 -Dzeebe.client.requestTimeout=62000
+                -Dapp.tls=true
                 -Dapp.worker.capacity=120
                 -Dapp.worker.pollingDelay=1ms
                 -Dapp.worker.completionDelay=50ms
