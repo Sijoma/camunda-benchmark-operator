@@ -21,6 +21,9 @@ spec:
     - jsonPath: .spec.workerCount
       name: '# Workers'
       type: string
+    - jsonPath: .spec.starterReplicas
+      name: '# Starters'
+      type: string
     - jsonPath: .spec.processStarterRate
       name: Starter Rate
       type: string

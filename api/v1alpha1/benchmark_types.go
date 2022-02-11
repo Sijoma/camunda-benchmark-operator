@@ -49,6 +49,7 @@ type BenchmarkStatus struct {
 //+kubebuilder:subresource:status
 //+kubebuilder:resource:scope=Namespaced,path=benchmarks,shortName=bench
 //+kubebuilder:printcolumn:name="# Workers",type=string,JSONPath=`.spec.workerCount`
+//+kubebuilder:printcolumn:name="# Starters",type=string,JSONPath=`.spec.starterReplicas`
 //+kubebuilder:printcolumn:name="Starter Rate",type=string,JSONPath=`.spec.processStarterRate`
 //+kubebuilder:printcolumn:name="Duration",type=string,JSONPath=`.spec.duration`
 //+kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"

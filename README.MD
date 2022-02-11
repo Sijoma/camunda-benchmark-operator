@@ -60,8 +60,8 @@ Events:        <none>
 
 You can also run `kubectl get bench benchmark-sample` and it will print this:
 ```shell
-NAME                    # WORKERS   STARTER RATE   DURATION   AGE    PROGRESS
-benchmark-sample-gets   2           200            2m         106s   Running
+NAME                    # WORKERS   # STARTERS   STARTER RATE   DURATION   AGE    PROGRESS
+benchmark-sample-gets   2           1            200            2m         106s   Running
 ```
 
 In the future this should also log the results of the benchmark. 
