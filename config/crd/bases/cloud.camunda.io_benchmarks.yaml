@@ -41,11 +41,14 @@ spec:
                 type: string
               processStarterRate:
                 type: integer
+              starterReplicas:
+                type: integer
               workerCount:
                 type: integer
             required:
             - benchmarkName
             - processStarterRate
+            - starterReplicas
             - workerCount
             type: object
           status:

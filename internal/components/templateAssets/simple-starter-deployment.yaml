@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: simple
-  replicas: 1
+  replicas: {{ .starterReplicas }}
   template:
     metadata:
       labels:

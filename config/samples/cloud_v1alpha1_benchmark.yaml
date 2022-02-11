@@ -6,3 +6,4 @@ spec:
   benchmarkName: "load-test"
   workerCount: 3
   processStarterRate: 200
+  starterReplicas: 2

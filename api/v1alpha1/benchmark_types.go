@@ -29,6 +29,7 @@ type BenchmarkSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 	BenchmarkName      string `json:"benchmarkName"`
 	ProcessStarterRate int    `json:"processStarterRate"`
+	StarterReplicas    int    `json:"starterReplicas"`
 	WorkerCount        int    `json:"workerCount"`
 }
 
