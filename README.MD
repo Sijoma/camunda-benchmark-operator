@@ -36,6 +36,7 @@ spec:
   workerCount: 2
   processStarterRate: 200
   starterReplicas: 3
+  duration: 1m30s
 ```
 
 
@@ -45,12 +46,15 @@ Run if you want to get more insights on the current status of the benchmark:
 `kubectl describe benchmark benchmark-sample`
 ```
 Spec:
-    Credentials Secret Name:  cloud-credentials
-    Process Starter Rate:     350
-    Starter Replicas:         2
-    Worker Count:             3
+  Credentials Secret Name:  cloud-credentials
+  Duration:                 2m
+  Process Starter Rate:     200
+  Starter Replicas:         3
+  Worker Count:             2
 Status:
-    Start Time:  2022-02-11T20:00:18Z
+  Progress:    Running
+  Start Time:  2022-02-11T21:34:21Z
+
 Events:        <none>yaml
 ```
 
