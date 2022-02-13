@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"context"
-	v1 "k8s.io/api/apps/v1"
 	"time"
 
-	. "github.com/onsi/ginkgo"
+	v1 "k8s.io/api/apps/v1"
+
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
@@ -45,7 +46,7 @@ var _ = Describe("Benchmark controller", func() {
 					ProcessStarterRate:    100,
 					StarterReplicas:       50,
 					WorkerCount:           10,
-					Duration:              "2m",
+					Duration:              "2s",
 				},
 			}
 			Expect(k8sClient.Create(ctx, benchmark)).Should(Succeed())
@@ -84,6 +85,27 @@ var _ = Describe("Benchmark controller", func() {
 				}
 				return len(deploymentList.Items), err
 			}, duration, interval).Should(Equal(2))
+
+			By("By checking that Benchmark is getting finished")
+			Eventually(func() (string, error) {
+				err := k8sClient.Get(ctx, benchmarkLookupKey, createdBenchmark)
+				if err != nil {
+					return "", err
+				}
+				return createdBenchmark.Status.Progress, nil
+			}, duration, interval).Should(Equal("Done"))
+
+			By("By checking that the deployment count is cleaned up")
+			Eventually(func() (int, error) {
+				deploymentList := v1.DeploymentList{
+					TypeMeta: v1.Deployment{}.TypeMeta,
+				}
+				err := k8sClient.List(ctx, &deploymentList)
+				if err != nil {
+					return 0, err
+				}
+				return len(deploymentList.Items), err
+			}, duration, interval).Should(Equal(0))
 		})
 	})
 
