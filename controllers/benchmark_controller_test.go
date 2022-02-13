@@ -15,7 +15,7 @@ import (
 
 // +kubebuilder:docs-gen:collapse=Imports
 
-var _ = Describe("CronJob controller", func() {
+var _ = Describe("Benchmark controller", func() {
 
 	// Define utility constants for object names and testing timeouts/durations and intervals.
 	const (
