@@ -4,10 +4,9 @@ import (
 	"context"
 	"time"
 
-	v1 "k8s.io/api/apps/v1"
-
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	v1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 
@@ -64,7 +63,7 @@ var _ = Describe("Benchmark controller", func() {
 			}, timeout, interval).Should(BeTrue())
 
 			Expect(createdBenchmark.Spec.ProcessStarterRate).Should(Equal(100))
-
+			Expect(createdBenchmark.Spec.WorkerCount).Should(Equal(10))
 			By("By checking the Benchmark is running")
 			Eventually(func() (string, error) {
 				err := k8sClient.Get(ctx, benchmarkLookupKey, createdBenchmark)

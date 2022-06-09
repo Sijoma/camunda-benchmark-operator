@@ -1,10 +1,11 @@
 package internal
 
 import (
+	"strconv"
+
 	cloudv1alpha "github.com/sijoma/camunda-benchmark-operator/api/v1alpha1"
 	"github.com/sijoma/camunda-benchmark-operator/internal/components"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	"strconv"
 )
 
 type Benchmark struct {

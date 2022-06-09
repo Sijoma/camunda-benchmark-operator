@@ -18,12 +18,10 @@ package controllers
 
 import (
 	"context"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"time"
 
-	"github.com/sijoma/camunda-benchmark-operator/internal"
 	apps "k8s.io/api/apps/v1"
-	core "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -31,6 +29,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
 	cloudv1alpha "github.com/sijoma/camunda-benchmark-operator/api/v1alpha1"
+	"github.com/sijoma/camunda-benchmark-operator/internal"
 )
 
 // BenchmarkReconciler reconciles a Benchmark object
@@ -59,7 +58,7 @@ func (r *BenchmarkReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 
 	var benchmark = new(cloudv1alpha.Benchmark)
 	if err := r.Get(ctx, req.NamespacedName, benchmark); err != nil {
-		log.Error(err, "unable to fetch CronJob")
+		log.Error(err, "unable to fetch benchmark")
 		// we'll ignore not-found errors, since they can't be fixed by an immediate
 		// requeue (we'll need to wait for a new notification), and we can get them
 		// on deleted requests.
@@ -97,6 +96,7 @@ func (r *BenchmarkReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		benchmark.Status.StartTime = &metav1.Time{Time: time.Now()}
 	}
 
+	// Reconcile function will rerun every 10 seconds
 	result := ctrl.Result{
 		Requeue:      true,
 		RequeueAfter: 10,
@@ -122,7 +122,6 @@ func (r *BenchmarkReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 func (r *BenchmarkReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&cloudv1alpha.Benchmark{}).
-		Owns(&core.Service{}).
 		Owns(&apps.Deployment{}).
 		Complete(r)
 }

@@ -47,8 +47,6 @@ spec:
               -Dapp.starter.rate={{ or .simpleStarterRate 300}}
               -Dzeebe.client.requestTimeout=62000
               -XX:+HeapDumpOnOutOfMemoryError
-              -Dapp.starter.bpmnXmlPath=bpmn/simpleProcess.bpmn
-              -Dapp.starter.processId=simpleProcess
         resources:
           limits:
             cpu: 250m
