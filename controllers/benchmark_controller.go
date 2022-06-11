@@ -78,18 +78,9 @@ func (r *BenchmarkReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	}
 
 	for _, resource := range bench.Resources {
-		// Set owner reference.
-		err := controllerutil.SetControllerReference(benchmark, resource, r.Scheme)
-		if err != nil {
-			return ctrl.Result{}, err
-		}
-
-		// Apply the object data.
-		force := true
-		err = r.Client.Patch(ctx, resource, client.Apply, &client.PatchOptions{Force: &force, FieldManager: "benchmark-reconciler"})
-		if err != nil {
-			return ctrl.Result{}, err
-		}
+		controllerutil.CreateOrUpdate(ctx, r.Client, resource, func() error {
+			return controllerutil.SetControllerReference(benchmark, resource, r.Scheme)
+		})
 	}
 
 	if benchmark.Status.StartTime == nil {
